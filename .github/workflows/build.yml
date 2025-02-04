@@ -1,11 +1,11 @@
-name: Run tests on Java 8
+name: Run build on Java 23
 
 on: push
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
-    name: Run unit tests on Java 23
+    name: Run build on Java 23
     steps:
       - uses: actions/checkout@master
       - name: Setup java
@@ -13,3 +13,11 @@ jobs:
         with:
           java-version: 23
       - run: mvn -f pom.xml clean install
+
+      - name: build the docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          dockerfile: Dockerfile
+          push: false
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/rest-api:v1.0.0
