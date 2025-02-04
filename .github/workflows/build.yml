@@ -4,6 +4,7 @@ on: push
 
 jobs:
   build:
+    environment: DIGITALOCEAN_ACCESS_TOKEN
     runs-on: ubuntu-latest
     name: Run build on Java 23
     steps:
